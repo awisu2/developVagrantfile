@@ -1,0 +1,38 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+    # machine数の調整
+    (0..1).each do |i|
+        config.vm.define "machine#{i}" do |machine|
+            # boxの出自もわかるので(vagrant box list)、alias名は付けない
+            # boxlist : http://www.vagrantbox.es/
+            machine.vm.box = "http://www.lyricalsoftware.com/downloads/centos65.box"
+
+            # using a specific IP.
+            # 複数仮想マシン間での接続もこのipが利用できる
+            my_ip = 10 + i
+            machine.vm.network "private_network", ip: "192.168.33.#{my_ip}"
+
+            # sync_folder
+            # Vagrant::Util::Platformで問題が出る場合があるようなので、エラーになる場合は環境毎にコメントアウトなどで対応
+            machine.vm.synced_folder "./", "/vagrant/host", :mount_options => ["dmode=755","fmode=755"]
+            if Vagrant::Util::Platform.windows?
+                machine.vm.synced_folder "../sync_folder", "/vagrant/sync_folder", :mount_options => ["dmode=755","fmode=755"]
+            else
+                machine.vm.synced_folder "../sync_folder", "/vagrant/sync_folder", type: "nfs"
+            end
+
+            # 1台目の端末を親として基本設定、他ホストは親端末からansibleで設定
+            if i == 0 then
+                machine.vm.provision "shell", :path => "vagrant_provision.sh"
+            end
+
+            # 同じキーを使用して、パス無しログイン設定
+            config.ssh.insert_key = false
+        end
+    end
+end
