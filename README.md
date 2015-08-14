@@ -1,0 +1,2 @@
+# developVagrantfile
+ansibleを利用したの開発用汎用vagrantfile
