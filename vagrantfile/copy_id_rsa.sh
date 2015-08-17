@@ -17,8 +17,8 @@ scp -F ${SSH_CONFIG} machine0:.ssh/id_rsa ${ID_RSA}
 if [ -e ${ID_RSA} ]; then
     rm -f ${ID_RSA}
 else
-    IDNTITY=`cat ${SSH_CONFIG} | grep IdentityFile | sed -e '1!d' | sed -e 's/IdentityFile//g' | sed -e 's/ //g'`
-    scp -F ${SSH_CONFIG} ${IDNTITY} machine0:.ssh/id_rsa
+    IDNTITY=`cat ${SSH_CONFIG} | grep IdentityFile | sed -e '1!d' | sed -e 's/IdentityFile//g' | sed -e 's/[ :]//g'`
+    scp -F "${SSH_CONFIG}" "/${IDNTITY}" machine0:.ssh/id_rsa
 fi
 
 #　不要ファイルの削除
