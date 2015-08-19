@@ -27,7 +27,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
                 # sync_folder
                 # Vagrant::Util::Platformで問題が出る場合があるようなので、エラーになる場合は環境毎にコメントアウトなどで対応
                 if Vagrant::Util::Platform.windows?
-                    machine.vm.synced_folder "../sync_folder", "/vagrant_sync/sync_folder", :mount_options => ["dmode=755","fmode=755"]
+                    machine.vm.synced_folder "../sync_folder", "/vagrant_sync/sync_folder", :mount_options => ["dmode=755","fmode=644"]
                 else
                     machine.vm.synced_folder "../sync_folder", "/vagrant_sync/sync_folder", type: "nfs"
                 end
