@@ -21,10 +21,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
             # sync_folder
             machine.vm.synced_folder "./", "/vagrant", :mount_options => ["dmode=755","fmode=755"]
 
-            machine.vm.provider "virtualbox" do |vb|
-                ## memory
-                #vb.memory = 2048
-            end
+            # memory
+            #machine.vm.provider "virtualbox" do |vb|
+            #    ## memory
+            #    #vb.memory = 2048
+            #end
 
 
             # 1台目の端末を親として基本設定、他ホストは親端末からansibleで設定
