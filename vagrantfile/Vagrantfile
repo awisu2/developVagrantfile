@@ -10,7 +10,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         config.vm.define "machine#{i}" do |machine|
             # boxの出自もわかるので(vagrant box list)、alias名は付けない
             # boxlist : http://www.vagrantbox.es/
-            machine.vm.box = "http://www.lyricalsoftware.com/downloads/centos65.box"
+            # machine.vm.box = "http://www.lyricalsoftware.com/downloads/centos65.box"
+            machine.vm.box = "https://github.com/CommanderK5/packer-centos-template/releases/download/0.6.7/vagrant-centos-6.7.box"
 
             # using a specific IP.
             # 複数仮想マシン間での接続もこのipが利用できる
